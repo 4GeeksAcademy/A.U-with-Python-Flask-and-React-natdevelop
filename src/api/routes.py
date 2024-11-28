@@ -21,7 +21,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/signup', methods=['POST'])
+@api.route('/signup', methods=['POST'])  #¿ aca va /singup o /demo ceci ?
 def register():
 
     data= request.json
@@ -43,8 +43,12 @@ def register():
     return jsonify({"message":"User created successfully"}),200
 
 
-# @api.route('/login', methods=['GET'])
-# def login():   
+        #ceci tengo una pregunta en el post de arriba 
+@api.route('/login', methods=['POST'])
+def registered():
 
+    data= request.json
+    name = data.get("name")
+    password = data.get("password")
 
-#     pass
+    pass

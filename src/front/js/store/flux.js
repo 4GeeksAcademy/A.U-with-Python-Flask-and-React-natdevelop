@@ -20,6 +20,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			login : async (useNew) => {
+				try {
+					const resp = await fetch (process.env.BACKEND_URL + "api/login",{
+						method:"POST",
+						headers:{"content-Type":"application/json"},
+						body:JSON.stringify(useNew)
+					})
+					console.log(resp.status)
+					return true;
+					
+				} catch (error) {
+					console.log("Error loading message from backend",error)
+					return false;
+				}
+			},
 
 			signup: async (newUser) => {
 				try{
