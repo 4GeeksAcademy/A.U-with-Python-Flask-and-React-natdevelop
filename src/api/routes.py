@@ -28,14 +28,23 @@ def register():
     name = data.get("name")
     email = data.get("email")
     password = data.get("password")
-    new_user = User(name = name, email = email , password = password )
+
+    exist_user = User.query.filter_by(email=email).first()
+    if exist_user:
+        return jsonify({"msg":"El usuario ya existe"}),400
+    
+    new_user = User(
+        name = name,
+        email = email , 
+        password = password 
+    )
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"message":"User created successfully"}),200
 
 
-@api.route('/login', methods=['GET'])
-def login():   
+# @api.route('/login', methods=['GET'])
+# def login():   
 
 
-    pass
+#     pass
