@@ -24,10 +24,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const resp = await fetch (process.env.BACKEND_URL + "api/login",{
 						method:"POST",
-						headers:{"content-Type":"application/json"},
+						headers:{"Content-Type":"application/json"},
 						body:JSON.stringify(useNew)
 					})
 					console.log(resp.status)
+					const data = await resp.json()
+					console.log(data)
 					return true;
 					
 				} catch (error) {
