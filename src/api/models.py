@@ -18,5 +18,10 @@ class User(db.Model):
         self.password = password
         self.is_active = True
 
-    def __repr__(self):
-        return f'<User {self.email}>'
+    def serialize(self):
+        return {
+            "id":self.id,
+            "name":self.name,
+            "email":self.email,
+            "is_active":self.is_active
+        }

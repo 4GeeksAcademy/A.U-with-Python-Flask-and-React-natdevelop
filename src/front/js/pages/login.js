@@ -1,8 +1,10 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
 export const Login = () => {
+    const navigate = useNavigate()
     const { store, actions } = useContext(Context)
     // const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -16,8 +18,13 @@ export const Login = () => {
             password: password
 
         }
-        let resp = await actions.login(userNew)
-        console.log(resp)
+        c
+       
+        console.log(resp) 
+        navigate("/private")
+
+        
+       
     }
     return (
         <div className="container">

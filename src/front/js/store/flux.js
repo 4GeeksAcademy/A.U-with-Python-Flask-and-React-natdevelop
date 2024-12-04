@@ -13,46 +13,73 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			user:null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			login : async (useNew) => {
+			login: async (useNew) => {
 				try {
-					const resp = await fetch (process.env.BACKEND_URL + "api/login",{
-						method:"POST",
-						headers:{"Content-Type":"application/json"},
-						body:JSON.stringify(useNew)
+					const resp = await fetch(process.env.BACKEND_URL + "api/login", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(useNew)
 					})
 					console.log(resp.status)
 					const data = await resp.json()
-					console.log(data)
-					return true;
-					
+					if (resp.ok) {
+
+						console.log(data)
+						setStore({user:data.user})
+						localStorage.setItem("access_token",data.access_token)
+						return true;
+					}
+					setStore({user:false})
+					return false
 				} catch (error) {
-					console.log("Error loading message from backend",error)
+					console.log("Error loading message from backend", error)
+					setStore({user:false})
 					return false;
 				}
 			},
 
 			signup: async (newUser) => {
-				try{
+				try {
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "api/signup",{
-						method:"POST",
-						headers:{"Content-Type":"application/json"},
-						body:JSON.stringify(newUser)
+					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(newUser)
 
 					})
 					console.log(resp.status)
 					return true;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 					return false;
 				}
+			},
+			private: async()=>{
+				const resp = await fetch(`${process.env.BACKEND_URL}api/private`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + localStorage.getItem("access_token") 
+					},
+					
+
+				})
+				const data=await resp.json()
+				if (resp.ok){
+					setStore({user:data})
+					return true
+				}
+				setStore({user:false})
+					return false
+
 			},
 			changeColor: (index, color) => {
 				//get the store
