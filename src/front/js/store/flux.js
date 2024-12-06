@@ -1,6 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token : null,
+
+
 			message: null,
 			demo: [
 				{
@@ -32,8 +35,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json()
 					if (resp.ok) {
 
-						console.log(data)
-						setStore({user:data.user})
+						console.log(data,"token")
+						setStore({user:data.user,token:data.access_token})
+
 						localStorage.setItem("access_token",data.access_token)
 						return true;
 					}

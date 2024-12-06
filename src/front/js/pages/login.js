@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link} from "react-router-dom";
+ 
 
 import { Context } from "../store/appContext";
 
@@ -18,16 +19,18 @@ export const Login = () => {
             password: password
 
         }
-        c
+        let response = await actions.login(userNew)
        
-        console.log(resp) 
-        navigate("/private")
+        if (response){navigate("/")}
+        else{alert("Error al hacer login")}
+        console.log(response) 
+        // navigate("/private")
 
         
        
     }
     return (
-        <div className="container">
+        <div className="container text-primary">
 			<h1>Iniciar Sesion</h1>
 			<form>
 				{/* <div className="mb-3">
@@ -35,15 +38,16 @@ export const Login = () => {
 					<input type="text" value={name} onChange={(e)=>setName(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
 				</div> */}
 				<div className="mb-3">
-					<label for="exampleInputEmail1" className="form-label">Email address</label>
+					<label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
 					<input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
 				</div>
 				<div className="mb-3">
-					<label for="exampleInputPassword1" className="form-label">Password</label>
+					<label htmlFor="exampleInputPassword1" className="form-label">Password</label>
 					<input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" />
 				</div>
-				<button type="button" onClick={(e)=>login(e)} className="btn btn-primary">Submit</button>
-			</form>
+				<button type="button" onClick={(e)=>login(e)} className="btn btn-primary m-2">Submit</button>
+                <Link to="/signup">Register</Link>
+            </form>
 		</div>
     );
 }
