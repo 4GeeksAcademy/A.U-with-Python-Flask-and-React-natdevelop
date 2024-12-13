@@ -37,7 +37,7 @@ export const Signup = () => {
 					<input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" />
 				</div>
 				<button type="button" onClick={(e)=>add(e)} className="btn btn-primary m-2">Submit</button>
-				c
+				
 			</form>
 		</div>
 	);
